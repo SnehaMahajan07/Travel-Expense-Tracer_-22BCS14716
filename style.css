@@ -1,0 +1,284 @@
+header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 50px; /* Adjust the height as needed */
+}
+
+h1 {
+    margin: 0;
+    font-size: 48px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, color 0.3s ease;
+    color: transparent;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+
+        h1:hover {
+            transform: scale(1.05); /* Slightly enlarge the header on hover */
+            color: #333; /* Change text color on hover */
+            cursor: pointer;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color:lightgrey;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-in animation for body */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            animation: slideDown 0.5s ease-in-out;
+        }
+
+        /* Slide-down animation for header */
+        @keyframes slideDown {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: #618bd3;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        nav:hover {
+            background-color: #45a049;
+        }
+
+        nav .nav-links {
+            display: flex;
+        }
+
+        nav .nav-links ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav .nav-links ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        nav .nav-links ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links ul li a:hover {
+            color: #ddd;
+        }
+
+        /* Section styles with smooth transitions */
+        #home-section, #help-section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInSection 0.8s ease-in-out forwards;
+        }
+
+        /* Fade-in for sections */
+        @keyframes fadeInSection {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Expense Tracker Inputs */
+        form {
+            margin-top: 20px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        form:hover {
+            transform: translateY(-5px);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="number"], input[type="date"], select {
+            width: 45%;
+            display: inline-block;
+        }
+
+        button {
+            background-color: #5f8dce;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Expense summary and table styles */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Graph container styles */
+        #graph-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #expense-graph {
+            width: 45%;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        /* Warning message */
+        #warning-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 15px;
+            display: none;
+            opacity: 0;
+            animation: fadeInWarning 1s ease-in-out forwards;
+        }
+
+        /* Fade-in warning message */
+        @keyframes fadeInWarning {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Help section at the bottom of the page */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        footer button {
+            background-color: #7196d6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        footer button:hover {
+            background-color: #45a049;
+        }
+
+        /* Add scrolling styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: scroll;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        #home-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(120deg, rgb(112, 120, 240), rgba(199, 38, 199, 0.841));
+        }
+
+        /* Box for the welcome section */
+        #welcome-box {
+            background-color: #d4f060;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 20px 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            margin: 0 auto;
+        }

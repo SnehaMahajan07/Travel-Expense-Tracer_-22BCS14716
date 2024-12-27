@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripTally</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="travel logo.png" id="logo">
+        <h1>TripTally</h1>
+       
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <ul>
+                <li><a href="#" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#" id="help-link"><i class="fas fa-question-circle"></i> Help</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div id="home-section">
+            <div id="welcome-box">
+                <h2>Welcome to TripTally</h2>
+                <p>Traveling is about experiencing the world, not stressing over your finances. Our Travel Expense Tracker is here to help you navigate your adventures without losing sight of your budget. Whether you’re exploring a new city, attending a business conference, or taking a much-needed vacation, we make managing your travel expenses a breeze.</p>
+                <h4>Track Every Dollar, Effortlessly</h4>
+                <p>With our intuitive platform, you can log every expense on the go, categorize your spending, and track your budget in real-time. Say goodbye to receipts piling up or worrying about overspending—our tracker keeps everything organized and at your fingertips.</p>
+            </div>
+        </div>
+
+        <!-- Total Budget Form -->
+        <h2>Set Your Total Budget</h2>
+        <form id="budget-form">
+            <label for="total-budget">Total Budget:</label>
+            <input type="number" id="total-budget" placeholder="Enter your total budget" required>
+            <button type="submit">Set Budget</button>
+        </form>
+
+        <!-- Expense Tracker Inputs -->
+        <h2>Add Your Expenses</h2>
+        <form id="expense-form">
+            <label for="expense-type">Expense Type:</label>
+            <select id="expense-type" name="expense-type" required>
+                <option value="transport">Transport</option>
+                <option value="accommodation">Accommodation</option>
+                <option value="food">Food</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="submit">Add Expense</button>
+        </form>
+
+        <!-- Expense Summary -->
+        <h2>Expense Summary</h2>
+        <div id="graph-container">
+            <table border="1" id="expense-summary">
+                <thead>
+                    <tr>
+                        <th>Expense Type</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="expense-summary-table">
+                    <!-- User-added rows will appear here -->
+                </tbody>
+            </table>
+
+            <div id="expense-graph">
+                <canvas id="expenseChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Budget Summary -->
+        <div id="budget-summary">
+            <h3>Budget Summary</h3>
+            <p>Total Budget: <span id="display-budget">0</span></p>
+            <p>Total Spending: <span id="total-spend">0</span></p>
+            <p>Budget Left: <span id="remaining-budget">0</span></p>
+        </div>
+
+        <!-- Warning Message -->
+        <div id="warning-message">Warning: You have exceeded your budget!</div>
+    </main>
+
+    <footer>
+        <div id="help-section">
+            <button id="help-button">Help</button>
+            <h4>Why Chose Us?</h4>
+            <p>
+                <ul>Save time, reduce stress, and take control of your finances.</ul>
+                <ul>Make smarter spending choices with data-driven insights.</ul>
+                <ul>Enjoy your trip without worrying about your wallet.</ul>
+            </p>
+            <h3>Contact Us</h3>
+            <p>If you need assistance, please email us at <a href="mailto:support@example.com">support@example.com</a>.</p>
+            <p>&copy; <span id="current-year"></span> TripTally. All rights reserved.</p>
+        </div>
+        <p>Made with love: Sneha Mahajan || 22BCS14716</p>
+    </footer>
+
+    <script>
+        // Variables
+        const budgetForm = document.getElementById('budget-form');
+        const totalBudgetInput = document.getElementById('total-budget');
+        const displayBudget = document.getElementById('display-budget');
+        const totalSpendElement = document.getElementById('total-spend');
+        const remainingBudgetElement = document.getElementById('remaining-budget');
+        const expenseForm = document.getElementById('expense-form');
+        const expenseSummaryTable = document.getElementById('expense-summary-table');
+        const warningMessage = document.getElementById('warning-message');
+
+        let expenses = [];
+        let totalBudget = 0;
+
+        // Set Budget
+        budgetForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            totalBudget = parseFloat(totalBudgetInput.value);
+            displayBudget.textContent = totalBudget.toFixed(2);
+            updateBudgetSummary();
+        });
+
+        // Add Expense
+        expenseForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const expenseType = document.getElementById('expense-type').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const date = document.getElementById('date').value;
+
+            expenses.push({ expenseType, amount, date });
+            updateExpenseSummary();
+        });
+
+        // Update Expense Summary
+        function updateExpenseSummary() {
+            expenseSummaryTable.innerHTML = '';
+            let totalSpending = 0;
+
+            expenses.forEach(function(expense) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${expense.expenseType}</td>
+                    <td>${expense.amount}</td>
+                    <td>${expense.date}</td>
+                `;
+                expenseSummaryTable.appendChild(row);
+                totalSpending += expense.amount;
+            });
+
+            updateBudgetSummary(totalSpending);
+        }
+
+        // Update Budget Summary
+        function updateBudgetSummary(totalSpending = 0) {
+            const budgetLeft = totalBudget - totalSpending;
+            totalSpendElement.textContent = totalSpending.toFixed(2);
+            remainingBudgetElement.textContent = budgetLeft.toFixed(2);
+
+            if (budgetLeft < 0) {
+                warningMessage.style.display = 'block';
+            } else {
+                warningMessage.style.display = 'none';
+            }
+        }
+
+        // Display Current Year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
